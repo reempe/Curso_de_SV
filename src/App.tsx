@@ -1,11 +1,11 @@
 import { SlideShell } from './components/SlideShell'
 import { useDeckNav } from './hooks/useDeckNav'
-import { Portada } from './slides/Portada'
+import { Hub } from './slides/Hub'
 import { slideViews } from './slides/registry'
 
 export default function App() {
   const { current } = useDeckNav()
-  const View = slideViews[current.id] ?? Portada
+  const View = slideViews[current.id] ?? Hub
 
   return (
     <SlideShell>

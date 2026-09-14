@@ -1,4 +1,6 @@
+import { NormBridge } from '../components/NormBridge'
 import { article, derechosCiclista } from '../content/ley30936'
+import { leyBridges } from '../data/bridges'
 
 export function Art10() {
   const data = article(10)
@@ -28,6 +30,7 @@ export function Art10() {
       <blockquote className="cita">
         <strong>Texto de la ley.</strong>
         {data.cita}
+        <NormBridge bridges={leyBridges['ley-art-10'] ?? []} />
       </blockquote>
     </div>
   )

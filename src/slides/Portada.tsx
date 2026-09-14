@@ -1,7 +1,9 @@
 import { leyMeta } from '../content/ley30936'
 import { BikeMark } from '../diagrams/lawDiagrams'
+import { useDeckNav } from '../hooks/useDeckNav'
 
 export function Portada() {
+  const { go } = useDeckNav()
   return (
     <div className="layout cover">
       <div className="cover-grid">
@@ -17,6 +19,9 @@ export function Portada() {
             Promover y regular la bicicleta como transporte sostenible: más eficiente en la vía y
             más cuidadoso con el ambiente.
           </p>
+          <button type="button" className="bridge-btn" onClick={() => go('ds-portada')}>
+            Ver el reglamento (D.S. 012-2020-MTC)
+          </button>
         </div>
         <BikeMark />
       </div>

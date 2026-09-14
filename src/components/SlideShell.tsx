@@ -7,11 +7,29 @@ type Props = {
   children: ReactNode
 }
 
+const deckTag: Record<string, string> = {
+  hub: 'Curso',
+  ley: 'Ley 30936',
+  ds: 'D.S. 012-2020-MTC',
+}
+
 export function SlideShell({ children }: Props) {
   const stageRef = useRef<HTMLDivElement>(null)
-  const { current, index, total, goOffset, goFirst, goLast, goIndexSlide } = useDeckNav()
+  const {
+    current,
+    deck,
+    index,
+    total,
+    goOffset,
+    goFirst,
+    goLast,
+    goIndexSlide,
+    goHub,
+    goOtherDeck,
+  } = useDeckNav()
   const { active, toggle } = useFullscreen(stageRef)
   const pct = `${((index + 1) / total) * 100}%`
+  const isHub = deck === 'hub'
 
   const keys = useMemo(
     () => ({
@@ -33,7 +51,9 @@ export function SlideShell({ children }: Props) {
     <div className="stage" ref={stageRef}>
       <div className="slide-frame">
         <header className="chrome-top">
-          <span className="ley-tag">Ley 30936</span>
+          <button type="button" className="ley-tag ley-tag-btn" onClick={goHub}>
+            {deckTag[deck]}
+          </button>
           <span className="kicker">{current.kicker}</span>
           <div className="progress" aria-hidden="true">
             <i style={{ width: pct }} />
@@ -48,14 +68,22 @@ export function SlideShell({ children }: Props) {
             type="button"
             className="chrome-btn"
             onClick={() => goOffset(-1)}
-            disabled={index === 0}
+            disabled={isHub || index === 0}
           >
             Anterior
           </button>
           <div className="grow now">{current.short}</div>
-          <button type="button" className="chrome-btn" onClick={goIndexSlide}>
+          <button type="button" className="chrome-btn" onClick={goHub}>
+            Inicio
+          </button>
+          <button type="button" className="chrome-btn" onClick={goIndexSlide} disabled={isHub}>
             Índice
           </button>
+          {!isHub && (
+            <button type="button" className="chrome-btn" onClick={goOtherDeck}>
+              {deck === 'ley' ? 'Reglamento' : 'Ley'}
+            </button>
+          )}
           <button type="button" className="chrome-btn" onClick={() => void toggle()}>
             {active ? 'Salir de pantalla completa' : 'Pantalla completa'}
           </button>
@@ -63,13 +91,15 @@ export function SlideShell({ children }: Props) {
             type="button"
             className="chrome-btn"
             onClick={() => goOffset(1)}
-            disabled={index === total - 1}
+            disabled={isHub || index === total - 1}
           >
             Siguiente
           </button>
         </footer>
       </div>
-      <p className="keys-hint">Atajos: ← → navegar · F pantalla completa · I índice · Home / End</p>
+      <p className="keys-hint">
+        Atajos: ← → navegar · F pantalla completa · I índice · Home / End · Inicio vuelve al hub
+      </p>
     </div>
   )
 }

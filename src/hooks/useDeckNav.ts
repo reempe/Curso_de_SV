@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useState } from 'react'
-import { parseHash, slideIndex, slides } from '../data/slides'
-import type { SlideMeta } from '../data/slides'
+import {
+  hubSlide,
+  otherDeckStart,
+  parseHash,
+  slideById,
+  slideIndexInDeck,
+  slidesOf,
+} from '../data/slides'
+import type { DeckId, SlideMeta } from '../data/slides'
 
 type DeckNav = {
   current: SlideMeta
+  deck: DeckId
   index: number
   total: number
   go: (id: string) => void
@@ -11,6 +19,8 @@ type DeckNav = {
   goFirst: () => void
   goLast: () => void
   goIndexSlide: () => void
+  goHub: () => void
+  goOtherDeck: () => void
 }
 
 export function useDeckNav(): DeckNav {
@@ -20,46 +30,74 @@ export function useDeckNav(): DeckNav {
     const sync = () => setId(parseHash(window.location.hash))
     window.addEventListener('hashchange', sync)
     if (!window.location.hash) {
-      window.location.hash = '#/portada'
+      window.location.hash = `#${hubSlide.path}`
     }
     return () => window.removeEventListener('hashchange', sync)
   }, [])
 
-  const index = slideIndex(id)
-  const current = slides[index] ?? slides[0]
+  const current = slideById(id)
+  const deckSlides = slidesOf(current.deck)
+  const index = slideIndexInDeck(current.id)
 
   const go = useCallback((nextId: string) => {
-    const slide = slides.find((item) => item.id === nextId)
-    if (slide) window.location.hash = `#${slide.path}`
+    const slide = slideById(nextId)
+    window.location.hash = `#${slide.path}`
   }, [])
 
   const goOffset = useCallback((delta: number) => {
-    const next = Math.max(0, Math.min(slides.length - 1, slideIndex(parseHash(window.location.hash)) + delta))
-    const slide = slides[next]
+    const here = slideById(parseHash(window.location.hash))
+    if (here.deck === 'hub') return
+    const list = slidesOf(here.deck)
+    const next = Math.max(0, Math.min(list.length - 1, slideIndexInDeck(here.id) + delta))
+    const slide = list[next]
     if (slide) window.location.hash = `#${slide.path}`
   }, [])
 
   const goFirst = useCallback(() => {
-    window.location.hash = `#${slides[0].path}`
+    const here = slideById(parseHash(window.location.hash))
+    const first = slidesOf(here.deck)[0]
+    if (first) window.location.hash = `#${first.path}`
   }, [])
 
   const goLast = useCallback(() => {
-    const last = slides[slides.length - 1]
+    const here = slideById(parseHash(window.location.hash))
+    const list = slidesOf(here.deck)
+    const last = list[list.length - 1]
     if (last) window.location.hash = `#${last.path}`
   }, [])
 
   const goIndexSlide = useCallback(() => {
-    window.location.hash = '#/indice'
+    const here = slideById(parseHash(window.location.hash))
+    if (here.deck === 'hub') {
+      window.location.hash = `#${hubSlide.path}`
+      return
+    }
+    const indexSlide = slidesOf(here.deck).find((item) => item.kind === 'index')
+    if (indexSlide) window.location.hash = `#${indexSlide.path}`
+  }, [])
+
+  const goHub = useCallback(() => {
+    window.location.hash = `#${hubSlide.path}`
+  }, [])
+
+  const goOtherDeck = useCallback(() => {
+    const here = slideById(parseHash(window.location.hash))
+    if (here.deck === 'hub') return
+    const target = otherDeckStart[here.deck]
+    window.location.hash = `#${slideById(target).path}`
   }, [])
 
   return {
     current,
+    deck: current.deck,
     index,
-    total: slides.length,
+    total: deckSlides.length,
     go,
     goOffset,
     goFirst,
     goLast,
     goIndexSlide,
+    goHub,
+    goOtherDeck,
   }
 }

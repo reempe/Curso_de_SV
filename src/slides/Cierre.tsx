@@ -1,3 +1,5 @@
+import { NormBridge } from '../components/NormBridge'
+
 export function Cierre() {
   return (
     <div className="layout">
@@ -44,6 +46,12 @@ export function Cierre() {
         <strong>Lo que la ley deja a desarrollar.</strong>
         Reglamento en 120 días hábiles (disp. 3.ª); infracciones en el Reglamento Nacional de
         Tránsito (art. 11); medidas de certificación de SERVIR (art. 9.2).
+        <NormBridge
+          bridges={[
+            { label: 'Abrir el reglamento', to: 'ds-portada' },
+            { label: 'Modificatorias RNT', to: 'ds-rnt' },
+          ]}
+        />
       </blockquote>
     </div>
   )
