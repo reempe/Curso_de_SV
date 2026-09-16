@@ -1,4 +1,4 @@
-export type DeckId = 'hub' | 'ley' | 'ds'
+export type DeckId = 'hub' | 'ley' | 'ds' | 'paper'
 
 export type SlideKind =
   | 'hub'
@@ -329,7 +329,63 @@ export const dsSlides: SlideMeta[] = [
   },
 ]
 
-export const allSlides: SlideMeta[] = [hubSlide, ...leySlides, ...dsSlides]
+const paperArt = (
+  key: string,
+  kicker: string,
+  title: string,
+  short: string,
+  chapter: string,
+): SlideMeta => ({
+  id: `paper-${key}`,
+  path: `/paper/${key}`,
+  kind: 'article',
+  deck: 'paper',
+  kicker,
+  title,
+  short,
+  chapter,
+})
+
+export const paperSlides: SlideMeta[] = [
+  {
+    id: 'paper-portada',
+    path: '/paper/portada',
+    kind: 'cover',
+    deck: 'paper',
+    kicker: 'Curso',
+    title: 'Incentivos para caminar y pedalear (Santos et al., 2010)',
+    short: 'Portada',
+  },
+  {
+    id: 'paper-indice',
+    path: '/paper/indice',
+    kind: 'index',
+    deck: 'paper',
+    kicker: 'Mapa de la Sección 4',
+    title: 'De los trayectos cortos a la bicicleta pública',
+    short: 'Índice',
+  },
+  paperArt('corto', 'Sección 4.1', 'Trayectos cortos y uso del suelo', 'Trayectos cortos', 'Marco y políticas'),
+  paperArt('politicas', 'Sección 4.1', 'Qué incentiva pedalear', 'Políticas', 'Marco y políticas'),
+  paperArt('salud', 'Sección 4.2', 'Beneficios en salud', 'Salud', 'Beneficios'),
+  paperArt('ambiente', 'Sección 4.3', 'Beneficios ambientales', 'Ambiente', 'Beneficios'),
+  paperArt('economia', 'Sección 4.5', 'Beneficios económicos', 'Economía', 'Beneficios'),
+  paperArt('seguridad', 'Sección 4.4', 'Seguridad en números', 'Seguridad', 'Seguridad'),
+  paperArt('ejemplos', 'Sección 4.6', 'Casos de éxito', 'Casos de éxito', 'Casos de éxito'),
+  paperArt('bicipublica', 'Sección 4.6', 'Bicicleta pública', 'Bici pública', 'Casos de éxito'),
+  {
+    id: 'paper-cierre',
+    path: '/paper/cierre',
+    kind: 'close',
+    deck: 'paper',
+    kicker: 'Cierre',
+    title: 'Conclusiones e inclusión social',
+    short: 'Cierre',
+    chapter: 'Cierre',
+  },
+]
+
+export const allSlides: SlideMeta[] = [hubSlide, ...leySlides, ...dsSlides, ...paperSlides]
 
 const leyAliases: Record<string, string> = {
   '/portada': '/ley/portada',
@@ -364,7 +420,8 @@ export function slideById(id: string): SlideMeta {
 export function slidesOf(deck: DeckId): SlideMeta[] {
   if (deck === 'hub') return [hubSlide]
   if (deck === 'ley') return leySlides
-  return dsSlides
+  if (deck === 'ds') return dsSlides
+  return paperSlides
 }
 
 export function slideIndexInDeck(id: string): number {
@@ -374,7 +431,22 @@ export function slideIndexInDeck(id: string): number {
   return index < 0 ? 0 : index
 }
 
-export const otherDeckStart: Record<'ley' | 'ds', string> = {
-  ley: 'ds-portada',
-  ds: 'ley-portada',
+const deckCycle: ('ley' | 'ds' | 'paper')[] = ['ley', 'ds', 'paper']
+
+export function nextDeck(deck: DeckId): 'ley' | 'ds' | 'paper' {
+  if (deck === 'hub') return 'ley'
+  const i = deckCycle.indexOf(deck)
+  return deckCycle[(i + 1) % deckCycle.length]
+}
+
+export const deckCoverId: Record<'ley' | 'ds' | 'paper', string> = {
+  ley: 'ley-portada',
+  ds: 'ds-portada',
+  paper: 'paper-portada',
+}
+
+export const deckShortLabel: Record<'ley' | 'ds' | 'paper', string> = {
+  ley: 'Ley',
+  ds: 'Reglamento',
+  paper: 'Paper',
 }

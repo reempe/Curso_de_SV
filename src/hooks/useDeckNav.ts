@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
+  deckCoverId,
+  deckShortLabel,
   hubSlide,
-  otherDeckStart,
+  nextDeck,
   parseHash,
   slideById,
   slideIndexInDeck,
@@ -21,6 +23,7 @@ type DeckNav = {
   goIndexSlide: () => void
   goHub: () => void
   goOtherDeck: () => void
+  otherDeckLabel: string
 }
 
 export function useDeckNav(): DeckNav {
@@ -83,9 +86,11 @@ export function useDeckNav(): DeckNav {
   const goOtherDeck = useCallback(() => {
     const here = slideById(parseHash(window.location.hash))
     if (here.deck === 'hub') return
-    const target = otherDeckStart[here.deck]
+    const target = deckCoverId[nextDeck(here.deck)]
     window.location.hash = `#${slideById(target).path}`
   }, [])
+
+  const otherDeckLabel = current.deck === 'hub' ? '' : deckShortLabel[nextDeck(current.deck)]
 
   return {
     current,
@@ -99,5 +104,6 @@ export function useDeckNav(): DeckNav {
     goIndexSlide,
     goHub,
     goOtherDeck,
+    otherDeckLabel,
   }
 }

@@ -25,6 +25,10 @@ import { DsIndice } from './ds/DsIndice'
 import { DsMapa } from './ds/DsMapa'
 import { DsPortada } from './ds/DsPortada'
 import { DsRnt } from './ds/DsRnt'
+import { PaperArticle } from './paper/PaperArticle'
+import { PaperCierre } from './paper/PaperCierre'
+import { PaperIndice } from './paper/PaperIndice'
+import { PaperPortada } from './paper/PaperPortada'
 
 function dsArt(n: number) {
   return function DsArtView() {
@@ -35,6 +39,12 @@ function dsArt(n: number) {
 function dsDisp(n: 1 | 2 | 3 | 4) {
   return function DsDispView() {
     return <DsDisposition n={n} />
+  }
+}
+
+function paperArt(key: string) {
+  return function PaperArtView() {
+    return <PaperArticle sectionKey={key} />
   }
 }
 
@@ -67,8 +77,15 @@ export const slideViews: Record<string, ComponentType> = {
   'ds-disp-2': dsDisp(2),
   'ds-disp-3': dsDisp(3),
   'ds-disp-4': dsDisp(4),
+  'paper-portada': PaperPortada,
+  'paper-indice': PaperIndice,
+  'paper-cierre': PaperCierre,
 }
 
 for (let n = 1; n <= 26; n += 1) {
   slideViews[`ds-art-${n}`] = dsArt(n)
+}
+
+for (const key of ['corto', 'politicas', 'salud', 'ambiente', 'economia', 'seguridad', 'ejemplos', 'bicipublica']) {
+  slideViews[`paper-${key}`] = paperArt(key)
 }

@@ -274,6 +274,54 @@ button {
   margin-right: 0.4rem;
 }
 
+.cita-row {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 0.6rem;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.sources {
+  border-left: 3px solid var(--line);
+  background: var(--card);
+  border-radius: 0 8px 8px 0;
+  padding: 0.4rem 0.7rem;
+  min-width: 0;
+}
+
+.sources-label {
+  display: block;
+  font-family: var(--header);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: clamp(0.6rem, 1cqi, 0.74rem);
+  margin-bottom: 0.2rem;
+}
+
+.sources ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-size: clamp(0.62rem, 1.05cqi, 0.82rem);
+  line-height: 1.28;
+}
+
+.sources li + li {
+  margin-top: 0.18rem;
+}
+
+.sources strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.sources em {
+  color: var(--muted);
+}
+
 .split {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -435,7 +483,7 @@ button {
 
 .hub-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.8rem;
   min-height: 0;
 }
@@ -709,6 +757,7 @@ button {
   .index-grid,
   .index-chapters,
   .hub-cards,
+  .cita-row,
   .actors {
     grid-template-columns: 1fr;
   }
