@@ -346,6 +346,17 @@ const paperArt = (
   chapter,
 })
 
+const paperFig = (id: string, kicker: string, title: string, short: string): SlideMeta => ({
+  id: `paper-fig-${id}`,
+  path: `/paper/fig/${id}`,
+  kind: 'article',
+  deck: 'paper',
+  kicker,
+  title,
+  short,
+  chapter: 'Evidencia · figuras y citas',
+})
+
 export const paperSlides: SlideMeta[] = [
   {
     id: 'paper-portada',
@@ -373,6 +384,14 @@ export const paperSlides: SlideMeta[] = [
   paperArt('seguridad', 'Sección 4.4', 'Seguridad en números', 'Seguridad', 'Seguridad'),
   paperArt('ejemplos', 'Sección 4.6', 'Casos de éxito', 'Casos de éxito', 'Casos de éxito'),
   paperArt('bicipublica', 'Sección 4.6', 'Bicicleta pública', 'Bici pública', 'Casos de éxito'),
+  paperFig('pucherBuehler2008', 'Pucher y Buehler (2008)', 'La bicicleta como opción masiva', 'Fig · Pucher/Buehler'),
+  paperFig('pucherDijkstra2003', 'Pucher y Dijkstra (2003)', 'Seguridad y edad', 'Fig · Pucher/Dijkstra'),
+  paperFig('jacobsen2003', 'Jacobsen (2003)', 'Seguridad en números', 'Fig · Jacobsen'),
+  paperFig('bassett2008', 'Bassett et al. (2008)', 'Transporte activo y obesidad', 'Fig · Bassett'),
+  paperFig('ogilvie2004', 'Ogilvie et al. (2004)', 'Qué intervenciones funcionan', 'Fig · Ogilvie'),
+  paperFig('litman2007', 'Litman (2007)', 'Costos externos evitados', 'Fig · Litman 2007'),
+  paperFig('litman2004', 'Litman (2004)', 'Fatalidades y transporte activo', 'Fig · Litman 2004'),
+  paperFig('noland2006', 'Noland e Ishaque (2006)', 'Bicicleta pública: OYBike', 'Fig · Noland'),
   {
     id: 'paper-cierre',
     path: '/paper/cierre',

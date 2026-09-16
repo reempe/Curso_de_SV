@@ -27,8 +27,10 @@ import { DsPortada } from './ds/DsPortada'
 import { DsRnt } from './ds/DsRnt'
 import { PaperArticle } from './paper/PaperArticle'
 import { PaperCierre } from './paper/PaperCierre'
+import { PaperEvidence } from './paper/PaperEvidence'
 import { PaperIndice } from './paper/PaperIndice'
 import { PaperPortada } from './paper/PaperPortada'
+import { evidenciaOrden } from '../content/santos2010'
 
 function dsArt(n: number) {
   return function DsArtView() {
@@ -45,6 +47,12 @@ function dsDisp(n: 1 | 2 | 3 | 4) {
 function paperArt(key: string) {
   return function PaperArtView() {
     return <PaperArticle sectionKey={key} />
+  }
+}
+
+function paperFig(id: string) {
+  return function PaperFigView() {
+    return <PaperEvidence id={id} />
   }
 }
 
@@ -88,4 +96,8 @@ for (let n = 1; n <= 26; n += 1) {
 
 for (const key of ['corto', 'politicas', 'salud', 'ambiente', 'economia', 'seguridad', 'ejemplos', 'bicipublica']) {
   slideViews[`paper-${key}`] = paperArt(key)
+}
+
+for (const id of evidenciaOrden) {
+  slideViews[`paper-fig-${id}`] = paperFig(id)
 }

@@ -173,6 +173,125 @@ export const paperSecciones: Record<string, PaperSection> = {
   },
 }
 
+export type Evidencia = {
+  fuenteId: string
+  titulo: string
+  figura: string
+  figuraCaption: string
+  cita: string
+  glosa: string
+  bridgeTo: string
+  bridgeLabel: string
+}
+
+export const evidenciaOrden = [
+  'pucherBuehler2008',
+  'pucherDijkstra2003',
+  'jacobsen2003',
+  'bassett2008',
+  'ogilvie2004',
+  'litman2007',
+  'litman2004',
+  'noland2006',
+]
+
+export const evidencias: Record<string, Evidencia> = {
+  pucherBuehler2008: {
+    fuenteId: 'pucherBuehler2008',
+    titulo: 'La bicicleta como opción masiva',
+    figura: '/papers/pucherBuehler2008.png',
+    figuraCaption:
+      'Figura 1: participación de la bicicleta en el total de viajes. Países Bajos 27 %; EE. UU., R. Unido y Australia ~1 %.',
+    cita: 'The key to achieving high levels of cycling appears to be the provision of separate cycling facilities along heavily traveled roads and at intersections, combined with traffic calming of most residential neighborhoods.',
+    glosa: 'La clave de una alta tasa de ciclismo es la infraestructura separada en vías de tránsito intenso y en los cruces, más el calmado de tránsito.',
+    bridgeTo: 'paper-ejemplos',
+    bridgeLabel: 'Ir a · Casos de éxito',
+  },
+  pucherDijkstra2003: {
+    fuenteId: 'pucherDijkstra2003',
+    titulo: 'Seguridad y edad al caminar y pedalear',
+    figura: '/papers/pucherDijkstra2003.png',
+    figuraCaption:
+      'Figura 1: porcentaje de viajes urbanos a pie y en bicicleta (EE. UU. 7 %, Países Bajos 46 %), 1995.',
+    cita: 'The Dutch and Germans who are 75 and older make roughly half their trips by foot or bike, compared with only 6% of Americans aged 65 and older.',
+    glosa: 'Con políticas seguras, caminar y pedalear siguen siendo viables incluso en la tercera edad.',
+    bridgeTo: 'paper-seguridad',
+    bridgeLabel: 'Ir a · Seguridad',
+  },
+  jacobsen2003: {
+    fuenteId: 'jacobsen2003',
+    titulo: 'Seguridad en números',
+    figura: '/papers/jacobsen2003.png',
+    figuraCaption:
+      'Figura 1: índice de riesgo relativo frente a la proporción de viajes al trabajo a pie/bici. 68 ciudades de California (2000).',
+    cita: 'Figure 1 shows that the likelihood of an injury is not constant but decreases as walking or bicycling increases.',
+    glosa: 'A más personas caminando y pedaleando, menor es el riesgo individual de sufrir un accidente.',
+    bridgeTo: 'paper-seguridad',
+    bridgeLabel: 'Ir a · Seguridad',
+  },
+  bassett2008: {
+    fuenteId: 'bassett2008',
+    titulo: 'Transporte activo y obesidad',
+    figura: '/papers/bassett2008.png',
+    figuraCaption:
+      'Figura 4: kilómetros caminados y pedaleados por habitante al año (EE. UU. el más bajo; Países Bajos el más alto).',
+    cita: 'countries in Europe, North America, and Australia where active travel is most common have the lowest obesity rates, whereas those countries with the highest rates of car use for travel have the highest obesity rates.',
+    glosa: 'El transporte activo se asocia de forma inversa con la obesidad (r = −0,86).',
+    bridgeTo: 'paper-salud',
+    bridgeLabel: 'Ir a · Salud',
+  },
+  ogilvie2004: {
+    fuenteId: 'ogilvie2004',
+    titulo: 'Qué intervenciones funcionan',
+    figura: '/papers/ogilvie2004.png',
+    figuraCaption:
+      'Resumen de la evidencia sobre la eficacia de las intervenciones para promover el cambio modal del auto a caminar y pedalear.',
+    cita: 'targeted programmes can change the behaviour of motivated subgroups, resulting in around 5% of all household trips being shifted from cars to walking and cycling.',
+    glosa: 'Los programas dirigidos a grupos motivados sí desplazan viajes; las campañas genéricas tienen evidencia débil.',
+    bridgeTo: 'paper-salud',
+    bridgeLabel: 'Ir a · Salud',
+  },
+  litman2007: {
+    fuenteId: 'litman2007',
+    titulo: 'Costos externos evitados',
+    figura: '/papers/litman2007.png',
+    figuraCaption:
+      'Figura 2: costos externos estimados del automóvil frente a caminar (US$ por pasajero-milla), por categoría.',
+    cita: 'each percentage shift of vehicle trips to walking can reduce transport external costs by several percentage points, particularly under urban-peak conditions when emission and parking costs are high.',
+    glosa: 'Cada punto porcentual de viajes que pasa del auto a caminar recorta varios puntos de costos externos.',
+    bridgeTo: 'paper-economia',
+    bridgeLabel: 'Ir a · Economía',
+  },
+  litman2004: {
+    fuenteId: 'litman2004',
+    titulo: 'Fatalidades y transporte activo',
+    figura: '/papers/litman2004.png',
+    figuraCaption:
+      'Figura 12: fatalidades de tránsito frente a la proporción de viajes no motorizados (EE. UU., censo 2000).',
+    cita: 'Per capita traffic fatality rates tend to decline as active travel increases. This is called “safety in numbers.”',
+    glosa: 'La evaluación económica del transporte activo incorpora la caída de fatalidades por la seguridad en números.',
+    bridgeTo: 'paper-economia',
+    bridgeLabel: 'Ir a · Economía',
+  },
+  noland2006: {
+    fuenteId: 'noland2006',
+    titulo: 'Bicicleta pública: OYBike',
+    figura: '/papers/noland2006.png',
+    figuraCaption:
+      'Figura 1: estación de anclaje de OYBike en Londres, esquema piloto de bicicleta pública (2004).',
+    cita: 'interest in the system was very low during months when weather and lighting conditions are poor.',
+    glosa: 'El primer sistema “inteligente” de bicicleta pública mostró fuerte estacionalidad y dependió de subsidio.',
+    bridgeTo: 'paper-bicipublica',
+    bridgeLabel: 'Ir a · Bici pública',
+  },
+}
+
+export function evidencia(id: string): Evidencia {
+  const data = evidencias[id]
+  if (!data) throw new Error(`No existe la evidencia "${id}"`)
+  return data
+}
+
 export function paperSection(key: string): PaperSection {
   const data = paperSecciones[key]
   if (!data) throw new Error(`No hay contenido para la sección "${key}" del paper`)

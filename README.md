@@ -35,6 +35,9 @@ Cada lámina está pensada en 16:9. Las rutas viejas de la ley (`#/portada`, `#/
 | `#/paper/seguridad` | Seguridad en números (Jacobsen, 2003) |
 | `#/paper/ejemplos` | Casos de éxito: Países Bajos, Alemania, Bogotá |
 | `#/paper/bicipublica` | Bicicleta pública: OYBike, Vélib, Bicing |
+| `#/paper/fig/jacobsen2003` | Figura y cita de cada uno de los 8 documentos |
+
+El mazo del paper cierra con una sección **«Evidencia · figuras y citas»**: una lámina por cada uno de los ocho documentos de `bike-cites-oa.tar.gz`, con una figura capturada del PDF y una cita textual. Las imágenes viven en `public/papers/`.
 
 ## Compilar
 
