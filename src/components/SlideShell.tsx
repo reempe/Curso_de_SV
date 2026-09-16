@@ -11,6 +11,7 @@ const deckTag: Record<string, string> = {
   hub: 'Curso',
   ley: 'Ley 30936',
   ds: 'D.S. 012-2020-MTC',
+  paper: 'Santos et al. 2010',
 }
 
 export function SlideShell({ children }: Props) {
@@ -26,6 +27,7 @@ export function SlideShell({ children }: Props) {
     goIndexSlide,
     goHub,
     goOtherDeck,
+    otherDeckLabel,
   } = useDeckNav()
   const { active, toggle } = useFullscreen(stageRef)
   const pct = `${((index + 1) / total) * 100}%`
@@ -81,7 +83,7 @@ export function SlideShell({ children }: Props) {
           </button>
           {!isHub && (
             <button type="button" className="chrome-btn" onClick={goOtherDeck}>
-              {deck === 'ley' ? 'Reglamento' : 'Ley'}
+              {otherDeckLabel}
             </button>
           )}
           <button type="button" className="chrome-btn" onClick={() => void toggle()}>
