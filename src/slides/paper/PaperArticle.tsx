@@ -3,8 +3,11 @@ import { paperSection } from '../../content/santos2010'
 import { paperBridges } from '../../data/bridges'
 import {
   PaperBikeShareDiagram,
+  PaperEconomyDiagram,
+  PaperEnvironmentDiagram,
   PaperGenericDiagram,
   PaperHealthDiagram,
+  PaperLandUseDiagram,
   PaperPoliciesDiagram,
   PaperSafetyDiagram,
   PaperShareDiagram,
@@ -12,17 +15,14 @@ import {
 import { PaperFrame } from '../PaperFrame'
 
 const diagrams: Record<string, ComponentType> = {
+  corto: PaperLandUseDiagram,
   politicas: PaperPoliciesDiagram,
   salud: PaperHealthDiagram,
+  ambiente: PaperEnvironmentDiagram,
+  economia: PaperEconomyDiagram,
   seguridad: PaperSafetyDiagram,
   ejemplos: PaperShareDiagram,
   bicipublica: PaperBikeShareDiagram,
-}
-
-const genericLines: Record<string, string[]> = {
-  corto: ['Uso del suelo como incentivo primario', 'Distancias cortas cerca de estaciones', 'Integración con el transporte público'],
-  ambiente: ['Sin emisiones ni contaminación local', 'Sustituyen viajes cortos en auto', 'Efecto palanca sobre los km-vehículo'],
-  economia: ['Ahorros en salud y seguridad', 'Comercio y valor del suelo', 'Beneficio-costo del ciclismo ~3,2'],
 }
 
 export function PaperArticle({ sectionKey }: { sectionKey: string }) {
@@ -40,11 +40,7 @@ export function PaperArticle({ sectionKey }: { sectionKey: string }) {
       {Diagram ? (
         <Diagram />
       ) : (
-        <PaperGenericDiagram
-          kicker="Sección 4"
-          title={data.titulo}
-          lines={genericLines[sectionKey] ?? data.puntos.slice(0, 3)}
-        />
+        <PaperGenericDiagram kicker="Sección 4" title={data.titulo} lines={data.puntos.slice(0, 3)} />
       )}
     </PaperFrame>
   )

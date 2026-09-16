@@ -154,6 +154,97 @@ export function PaperBikeShareDiagram() {
   )
 }
 
+export function PaperLandUseDiagram() {
+  return (
+    <Canvas label="Uso del suelo: acortar distancias e integrar con el transporte">
+      <Panel x={40} y={60} w={300} h={150} title="Trayecto corto" tone="promo" lines={['Excelente para', 'caminar y pedalear']} />
+      <Arrow x1={340} y1={135} x2={430} y2={135} />
+      <Panel
+        x={440}
+        y={40}
+        w={340}
+        h={190}
+        title="Uso del suelo"
+        tone="duty"
+        lines={['Incentivo primario', 'Densidad y mezcla', 'Destinos cercanos']}
+      />
+      <Panel
+        x={820}
+        y={60}
+        w={240}
+        h={150}
+        title="Estación"
+        tone="promo"
+        lines={['Parqueo y rampas', 'Viaje sin auto']}
+      />
+      <Panel
+        x={200}
+        y={280}
+        w={700}
+        h={110}
+        title="La dispersión hace dependiente del auto"
+        lines={['Barrios densos y compactos acercan el viaje activo']}
+      />
+    </Canvas>
+  )
+}
+
+export function PaperEnvironmentDiagram() {
+  return (
+    <Canvas label="Sustituir viajes cortos en auto reduce emisiones">
+      <Panel x={40} y={60} w={320} h={170} title="Viaje corto en auto" tone="duty" lines={['Mayor tasa de', 'emisión por km', 'Arranque en frío']} />
+      <Arrow x1={360} y1={145} x2={450} y2={145} tone="promo" />
+      <Panel
+        x={460}
+        y={60}
+        w={300}
+        h={170}
+        title="A pie o en bici"
+        tone="promo"
+        lines={['Cero emisiones', 'locales']}
+      />
+      <Panel
+        x={800}
+        y={40}
+        w={260}
+        h={210}
+        title="21 % del CO2"
+        tone="duty"
+        lines={['R. Unido: viajes', '< 5 millas', 'sustituibles']}
+      />
+      <Panel
+        x={180}
+        y={300}
+        w={740}
+        h={100}
+        title="Efecto palanca (Litman, 2004)"
+        tone="promo"
+        lines={['Cada km activo elimina varios km-vehículo']}
+      />
+    </Canvas>
+  )
+}
+
+export function PaperEconomyDiagram() {
+  return (
+    <Canvas label="Categorías de beneficio y relación beneficio-costo">
+      <Panel x={40} y={50} w={250} h={150} title="Salud" tone="promo" lines={['Menos gasto', 'y más productividad']} />
+      <Panel x={300} y={50} w={250} h={150} title="Seguridad" tone="duty" lines={['Menos fatalidades', 'y sus costos']} />
+      <Panel x={560} y={50} w={230} h={150} title="Comercio" lines={['+17 % en ventas', 'calles peatonales']} />
+      <Panel x={800} y={50} w={260} h={150} title="Ahorros" tone="promo" lines={['Vías, vehículos', 'y parqueo']} />
+      <Panel
+        x={220}
+        y={250}
+        w={660}
+        h={130}
+        title="Beneficio-costo del ciclismo ~3,2"
+        tone="duty"
+        lines={['Rendimientos decrecientes: hasta 20 en Delhi, 1,5 en Ámsterdam']}
+      />
+    </Canvas>
+  )
+}
+
 export function PaperGenericDiagram({
   kicker,
   title,
