@@ -6,6 +6,7 @@ type DeckKeys = {
   first: () => void
   last: () => void
   index: () => void
+  back: () => void
   fullscreen: () => void
 }
 
@@ -40,6 +41,10 @@ export function useDeckKeys(actions: DeckKeys) {
         case 'I':
           event.preventDefault()
           actions.index()
+          break
+        case 'Backspace':
+          event.preventDefault()
+          actions.back()
           break
         case 'f':
         case 'F':
