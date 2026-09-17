@@ -1,30 +1,33 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
 import {
   hubSlide,
-  otherDeckStart,
   parseHash,
   slideById,
   slideIndexInDeck,
   slidesOf,
 } from '../data/slides'
 import type { DeckId, SlideMeta } from '../data/slides'
+import { getJumpStack, popJump, pushJump, subscribeJumpStack } from '../nav/jumpStack'
 
 type DeckNav = {
   current: SlideMeta
   deck: DeckId
   index: number
   total: number
+  canGoBack: boolean
+  backLabel: string | undefined
   go: (id: string) => void
   goOffset: (delta: number) => void
   goFirst: () => void
   goLast: () => void
   goIndexSlide: () => void
   goHub: () => void
-  goOtherDeck: () => void
+  goBack: () => void
 }
 
 export function useDeckNav(): DeckNav {
   const [id, setId] = useState(() => parseHash(window.location.hash))
+  const jumpStack = useSyncExternalStore(subscribeJumpStack, getJumpStack, getJumpStack)
 
   useEffect(() => {
     const sync = () => setId(parseHash(window.location.hash))
@@ -38,9 +41,15 @@ export function useDeckNav(): DeckNav {
   const current = slideById(id)
   const deckSlides = slidesOf(current.deck)
   const index = slideIndexInDeck(current.id)
+  const backId = jumpStack[jumpStack.length - 1]
+  const canGoBack = jumpStack.length > 0
+  const backLabel = backId ? slideById(backId).short : undefined
 
   const go = useCallback((nextId: string) => {
+    const here = slideById(parseHash(window.location.hash))
     const slide = slideById(nextId)
+    if (here.id === slide.id) return
+    pushJump(here.id)
     window.location.hash = `#${slide.path}`
   }, [])
 
@@ -80,11 +89,10 @@ export function useDeckNav(): DeckNav {
     window.location.hash = `#${hubSlide.path}`
   }, [])
 
-  const goOtherDeck = useCallback(() => {
-    const here = slideById(parseHash(window.location.hash))
-    if (here.deck === 'hub') return
-    const target = otherDeckStart[here.deck]
-    window.location.hash = `#${slideById(target).path}`
+  const goBack = useCallback(() => {
+    const last = popJump()
+    if (!last) return
+    window.location.hash = `#${slideById(last).path}`
   }, [])
 
   return {
@@ -92,12 +100,14 @@ export function useDeckNav(): DeckNav {
     deck: current.deck,
     index,
     total: deckSlides.length,
+    canGoBack,
+    backLabel,
     go,
     goOffset,
     goFirst,
     goLast,
     goIndexSlide,
     goHub,
-    goOtherDeck,
+    goBack,
   }
 }

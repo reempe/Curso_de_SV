@@ -20,12 +20,14 @@ export function SlideShell({ children }: Props) {
     deck,
     index,
     total,
+    canGoBack,
+    backLabel,
     goOffset,
     goFirst,
     goLast,
     goIndexSlide,
     goHub,
-    goOtherDeck,
+    goBack,
   } = useDeckNav()
   const { active, toggle } = useFullscreen(stageRef)
   const pct = `${((index + 1) / total) * 100}%`
@@ -38,11 +40,12 @@ export function SlideShell({ children }: Props) {
       first: goFirst,
       last: goLast,
       index: goIndexSlide,
+      back: goBack,
       fullscreen: () => {
         void toggle()
       },
     }),
-    [goOffset, goFirst, goLast, goIndexSlide, toggle],
+    [goOffset, goFirst, goLast, goIndexSlide, goBack, toggle],
   )
 
   useDeckKeys(keys)
@@ -64,41 +67,48 @@ export function SlideShell({ children }: Props) {
         </header>
         <main className="slide-body">{children}</main>
         <footer className="chrome-bottom">
-          <button
-            type="button"
-            className="chrome-btn"
-            onClick={() => goOffset(-1)}
-            disabled={isHub || index === 0}
-          >
-            Anterior
-          </button>
-          <div className="grow now">{current.short}</div>
-          <button type="button" className="chrome-btn" onClick={goHub}>
-            Inicio
-          </button>
-          <button type="button" className="chrome-btn" onClick={goIndexSlide} disabled={isHub}>
-            Índice
-          </button>
-          {!isHub && (
-            <button type="button" className="chrome-btn" onClick={goOtherDeck}>
-              {deck === 'ley' ? 'Reglamento' : 'Ley'}
+          <div className="chrome-nav">
+            <button
+              type="button"
+              className="chrome-btn"
+              onClick={() => goOffset(-1)}
+              disabled={isHub || index === 0}
+            >
+              Anterior
             </button>
-          )}
-          <button type="button" className="chrome-btn" onClick={() => void toggle()}>
-            {active ? 'Salir de pantalla completa' : 'Pantalla completa'}
+            <button
+              type="button"
+              className="chrome-btn"
+              onClick={() => goOffset(1)}
+              disabled={isHub || index === total - 1}
+            >
+              Siguiente
+            </button>
+          </div>
+          <button
+            type="button"
+            className="chrome-btn"
+            onClick={goBack}
+            disabled={!canGoBack}
+            title={backLabel ? `Volver a ${backLabel}` : 'Volver'}
+          >
+            Volver
           </button>
           <button
             type="button"
             className="chrome-btn"
-            onClick={() => goOffset(1)}
-            disabled={isHub || index === total - 1}
+            onClick={() => void toggle()}
+            aria-pressed={active}
           >
-            Siguiente
+            Pantalla completa
+          </button>
+          <button type="button" className="chrome-btn" onClick={goHub} disabled={isHub}>
+            Inicio
           </button>
         </footer>
       </div>
       <p className="keys-hint">
-        Atajos: ← → navegar · F pantalla completa · I índice · Home / End · Inicio vuelve al hub
+        Atajos: ← → navegar · F pantalla completa · I índice · Backspace volver · Home / End
       </p>
     </div>
   )

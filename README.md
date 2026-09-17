@@ -19,7 +19,7 @@ Abra la URL local. La primera lámina es el **inicio**: elija la ley o el reglam
 - `I` índice de esa norma
 - `Home` / `End` primera y última lámina del mazo
 - Botón **Inicio** (o el sello de la norma) vuelve al hub
-- Botón **Ley** / **Reglamento** salta a la otra norma
+- Botón **Volver** (o `Backspace`) regresa desde un enlace a otra diapositiva
 - `Esc` sale de pantalla completa
 
 Cada lámina está pensada en 16:9. Las rutas viejas de la ley (`#/portada`, `#/art/7`) siguen funcionando.

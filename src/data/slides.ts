@@ -373,8 +373,3 @@ export function slideIndexInDeck(id: string): number {
   const index = list.findIndex((item) => item.id === id)
   return index < 0 ? 0 : index
 }
-
-export const otherDeckStart: Record<'ley' | 'ds', string> = {
-  ley: 'ds-portada',
-  ds: 'ley-portada',
-}
